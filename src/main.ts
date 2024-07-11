@@ -11,6 +11,8 @@ export async function run(): Promise<void> {
     const title: string = core.getInput('issue_title')
     const body: string = core.getInput('issue_body')
 
+    core.debug(`Body: ${body}`)
+
     const author: string[] | null = grep(body, '^author=.+$')
     const date: string[] | null = grep(
       body,
@@ -19,6 +21,9 @@ export async function run(): Promise<void> {
 
     const authorName: string = author ? author[0].split('=')[1] : ''
     const dateValue: string = date ? date[0].split('=')[1] : ''
+
+    core.debug(`Author: ${authorName}`)
+    core.debug(`Date: ${dateValue}`)
 
     const bodyWithoutComments: string = body.replace(/<!--.*-->/gs, '').trim()
 
