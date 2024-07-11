@@ -24935,7 +24935,7 @@ exports["default"] = grep;
  */
 function grep(input, pattern) {
     const regex = new RegExp(pattern);
-    const inputLines = input.split(/\n/);
+    const inputLines = input.split(/\r\n|\n|\r/);
     const matches = inputLines.filter(line => {
         return line.match(regex) === null ? false : true;
     });
