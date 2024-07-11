@@ -26,7 +26,7 @@ describe('action', () => {
     setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
   })
 
-  it('出力値チェック', async () => {
+  it('出力値チェック1', async () => {
     getInputMock.mockImplementation(name => {
       switch (name) {
         case 'issue_body':
@@ -48,6 +48,62 @@ describe('action', () => {
       4,
       'body',
       'This is the body of the issue.'
+    )
+    expect(errorMock).not.toHaveBeenCalled()
+  })
+
+  it('出力値チェック2', async () => {
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'issue_body':
+          return "<!--\nauthor='John Doe'\ndate=2021/01/01\n-->\n\nThis is the body of the issue."
+        case 'issue_title':
+          return 'タイトル'
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'title', 'タイトル')
+    expect(setOutputMock).toHaveBeenNthCalledWith(2, 'date', '2021-01-01')
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      3,
+      'author',
+      '&#39;John Doe&#39;'
+    )
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      4,
+      'body',
+      'This is the body of the issue.'
+    )
+    expect(errorMock).not.toHaveBeenCalled()
+  })
+
+  it('出力値チェック3', async () => {
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'issue_body':
+          return '<!--\nauthor=John Doe\ndate=2021.01.01\n-->\n\nThis is the body of the issue.\nHello, world!\n""\nTEXT'
+        case 'issue_title':
+          return 'タイトル'
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'title', 'タイトル')
+    expect(setOutputMock).toHaveBeenNthCalledWith(2, 'date', '2021-01-01')
+    expect(setOutputMock).toHaveBeenNthCalledWith(3, 'author', 'John Doe')
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      4,
+      'body',
+      'This is the body of the issue.\nHello, world!\n&quot;&quot;\nTEXT'
     )
     expect(errorMock).not.toHaveBeenCalled()
   })

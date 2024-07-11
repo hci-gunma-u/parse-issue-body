@@ -24997,8 +24997,9 @@ async function run() {
         core.debug(`Author: ${authorName}`);
         core.debug(`Date: ${dateValue}`);
         const bodyWithoutComments = body.replace(/<!--.*-->/gs, '').trim();
+        const dateReplacement = dateValue.replaceAll(/[/.]/g, '-');
         core.setOutput('title', (0, replace_1.default)(title));
-        core.setOutput('date', dateValue.replaceAll('/[/.]/', '-'));
+        core.setOutput('date', dateReplacement);
         core.setOutput('author', (0, replace_1.default)(authorName));
         core.setOutput('body', (0, replace_1.default)(bodyWithoutComments));
     }

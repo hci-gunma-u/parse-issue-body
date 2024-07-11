@@ -27,8 +27,10 @@ export async function run(): Promise<void> {
 
     const bodyWithoutComments: string = body.replace(/<!--.*-->/gs, '').trim()
 
+    const dateReplacement: string = dateValue.replaceAll(/[/.]/g, '-')
+
     core.setOutput('title', replaceSpecialCharacters(title))
-    core.setOutput('date', dateValue.replaceAll('/[/.]/', '-'))
+    core.setOutput('date', dateReplacement)
     core.setOutput('author', replaceSpecialCharacters(authorName))
     core.setOutput('body', replaceSpecialCharacters(bodyWithoutComments))
   } catch (error) {
