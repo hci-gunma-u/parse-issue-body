@@ -1,2 +1,2 @@
-This is custom github action that parse issue and return sanitized metadata and
+This custom GitHub action parses the issues and returns sanitized metadata and
 body.

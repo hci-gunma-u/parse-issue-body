@@ -57,8 +57,13 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          issue_title: 'Test Issue'
+          issue_body: '<!--\nauthor=TESTER\ndate=2024/01/01\n-->\n\nThis is a test issue.'
 
       - name: Print Output
         id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+        run: |
+          echo "${{ steps.test-action.outputs.title }}"
+          echo "${{ steps.test-action.outputs.date }}"
+          echo "${{ steps.test-action.outputs.author }}"
+          echo "${{ steps.test-action.outputs.body }}"
