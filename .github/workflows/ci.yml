@@ -57,13 +57,7 @@ jobs:
 
       - name: Set a variable
         run: |
-          cat <<EOF >> "$GITHUB_ENV"
-          BODY=<!--
-          author=my name
-          date=2021-10-01
-          -->
-          This is a test issue.
-          EOF
+          echo BODY=`cat ./data_for_ci.txt` >> "$GITHUB_ENV"
 
       - name: Test Local Action
         id: test-action
