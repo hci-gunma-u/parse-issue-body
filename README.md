@@ -1,1 +1,3 @@
-This custom GitHub action parses the issues and returns sanitized article data.
+# Parse issue
+
+This custom GitHub Action parses the issues and returns sanitized article data.
