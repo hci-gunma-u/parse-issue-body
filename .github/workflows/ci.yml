@@ -58,7 +58,8 @@ jobs:
         uses: ./
         with:
           issue_title: 'Test Issue'
-          issue_body: '<!--\nauthor=TESTER\ndate=2024/01/01\n-->\n\nThis is a test issue.'
+          issue_body:
+            '<!--\nauthor=TESTER\ndate=2024/01/01\n-->\n\nThis is a test issue.'
 
       - name: Print Output
         id: output
