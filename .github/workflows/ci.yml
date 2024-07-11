@@ -59,7 +59,8 @@ jobs:
         with:
           issue_title: 'Test Issue'
           issue_body:
-            '<!--\nauthor=TESTER\ndate=2024/01/01\n-->\n\nThis is a test issue.'
+            <<EOL <!-- author=TESTER date=2024/01/01 --> This is a test issue.
+            EOL
 
       - name: Print Output
         id: output

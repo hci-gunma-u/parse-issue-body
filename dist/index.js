@@ -24991,16 +24991,12 @@ async function run() {
         const body = core.getInput('issue_body');
         const author = (0, grep_1.default)(body, '^author=.+$');
         const date = (0, grep_1.default)(body, '^date=[0-9]{4}[-/.][0-9]{2}[-/.][0-9]{2}$');
-        const authorString = author ? author[0].split('=')[1] : '';
-        const dateString = date
-            ? date[0].split('=')[1].replaceAll('/[/.]/', '-')
-            : '';
-        core.debug(`Author: ${authorString}`);
-        core.debug(`Date: ${dateString}`);
+        const authorName = author ? author[0].split('=')[1] : '';
+        const dateValue = date ? date[0].split('=')[1] : '';
         const bodyWithoutComments = body.replace(/<!--.*-->/gs, '').trim();
         core.setOutput('title', (0, replace_1.default)(title));
-        core.setOutput('date', dateString);
-        core.setOutput('author', (0, replace_1.default)(authorString));
+        core.setOutput('date', dateValue.replaceAll('/[/.]/', '-'));
+        core.setOutput('author', (0, replace_1.default)(authorName));
         core.setOutput('body', (0, replace_1.default)(bodyWithoutComments));
     }
     catch (error) {

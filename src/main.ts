@@ -17,19 +17,14 @@ export async function run(): Promise<void> {
       '^date=[0-9]{4}[-/.][0-9]{2}[-/.][0-9]{2}$'
     )
 
-    const authorString: string = author ? author[0].split('=')[1] : ''
-    const dateString: string = date
-      ? date[0].split('=')[1].replaceAll('/[/.]/', '-')
-      : ''
-
-    core.debug(`Author: ${authorString}`)
-    core.debug(`Date: ${dateString}`)
+    const authorName: string = author ? author[0].split('=')[1] : ''
+    const dateValue: string = date ? date[0].split('=')[1] : ''
 
     const bodyWithoutComments: string = body.replace(/<!--.*-->/gs, '').trim()
 
     core.setOutput('title', replaceSpecialCharacters(title))
-    core.setOutput('date', dateString)
-    core.setOutput('author', replaceSpecialCharacters(authorString))
+    core.setOutput('date', dateValue.replaceAll('/[/.]/', '-'))
+    core.setOutput('author', replaceSpecialCharacters(authorName))
     core.setOutput('body', replaceSpecialCharacters(bodyWithoutComments))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
