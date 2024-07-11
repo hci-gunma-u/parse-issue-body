@@ -107,4 +107,30 @@ describe('action', () => {
     )
     expect(errorMock).not.toHaveBeenCalled()
   })
+
+  it('出力値チェック4', async () => {
+    getInputMock.mockImplementation(name => {
+      switch (name) {
+        case 'issue_body':
+          return '<!--\nauthor=John Doe\ndate=2021.1.1\n-->\n\nThis is the body of the issue.\nHello, world!\n""\nTEXT'
+        case 'issue_title':
+          return 'タイトル'
+        default:
+          return ''
+      }
+    })
+
+    await main.run()
+    expect(runMock).toHaveReturned()
+
+    expect(setOutputMock).toHaveBeenNthCalledWith(1, 'title', 'タイトル')
+    expect(setOutputMock).toHaveBeenNthCalledWith(2, 'date', '2021-01-01')
+    expect(setOutputMock).toHaveBeenNthCalledWith(3, 'author', 'John Doe')
+    expect(setOutputMock).toHaveBeenNthCalledWith(
+      4,
+      'body',
+      'This is the body of the issue.\nHello, world!\n&quot;&quot;\nTEXT'
+    )
+    expect(errorMock).not.toHaveBeenCalled()
+  })
 })

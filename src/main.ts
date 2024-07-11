@@ -11,26 +11,25 @@ export async function run(): Promise<void> {
     const title: string = core.getInput('issue_title')
     const body: string = core.getInput('issue_body')
 
-    core.debug(`Body: ${body}`)
-
     const author: string[] | null = grep(body, '^author=.+$')
     const date: string[] | null = grep(
       body,
-      '^date=[0-9]{4}[-/.][0-9]{2}[-/.][0-9]{2}$'
+      '^date=[0-9]{4}[-/.][0-9]{1,2}[-/.][0-9]{1,2}$'
     )
 
     const authorName: string = author ? author[0].split('=')[1] : ''
-    const dateValue: string = date ? date[0].split('=')[1] : ''
 
-    core.debug(`Author: ${authorName}`)
-    core.debug(`Date: ${dateValue}`)
+    let dateFormatted = ''
+    if (date) {
+      const dateValue: string = date[0].split('=')[1]
+      const dateParts: string[] = dateValue.split(/[-/.]/)
+      dateFormatted = `${dateParts[0]}-${dateParts[1].padStart(2, '0')}-${dateParts[2].padStart(2, '0')}`
+    }
 
     const bodyWithoutComments: string = body.replace(/<!--.*-->/gs, '').trim()
 
-    const dateReplacement: string = dateValue.replaceAll(/[/.]/g, '-')
-
     core.setOutput('title', replaceSpecialCharacters(title))
-    core.setOutput('date', dateReplacement)
+    core.setOutput('date', dateFormatted)
     core.setOutput('author', replaceSpecialCharacters(authorName))
     core.setOutput('body', replaceSpecialCharacters(bodyWithoutComments))
   } catch (error) {

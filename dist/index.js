@@ -24989,17 +24989,18 @@ async function run() {
     try {
         const title = core.getInput('issue_title');
         const body = core.getInput('issue_body');
-        core.debug(`Body: ${body}`);
         const author = (0, grep_1.default)(body, '^author=.+$');
-        const date = (0, grep_1.default)(body, '^date=[0-9]{4}[-/.][0-9]{2}[-/.][0-9]{2}$');
+        const date = (0, grep_1.default)(body, '^date=[0-9]{4}[-/.][0-9]{1,2}[-/.][0-9]{1,2}$');
         const authorName = author ? author[0].split('=')[1] : '';
-        const dateValue = date ? date[0].split('=')[1] : '';
-        core.debug(`Author: ${authorName}`);
-        core.debug(`Date: ${dateValue}`);
+        let dateFormatted = '';
+        if (date) {
+            const dateValue = date[0].split('=')[1];
+            const dateParts = dateValue.split(/[-/.]/);
+            dateFormatted = `${dateParts[0]}-${dateParts[1].padStart(2, '0')}-${dateParts[2].padStart(2, '0')}`;
+        }
         const bodyWithoutComments = body.replace(/<!--.*-->/gs, '').trim();
-        const dateReplacement = dateValue.replaceAll(/[/.]/g, '-');
         core.setOutput('title', (0, replace_1.default)(title));
-        core.setOutput('date', dateReplacement);
+        core.setOutput('date', dateFormatted);
         core.setOutput('author', (0, replace_1.default)(authorName));
         core.setOutput('body', (0, replace_1.default)(bodyWithoutComments));
     }
