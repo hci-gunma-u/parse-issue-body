@@ -6,7 +6,7 @@
  */
 export default function grep(input: string, pattern: string): string[] | null {
   const regex = new RegExp(pattern)
-  const inputLines: string[] = input.split(/\n/)
+  const inputLines: string[] = input.split(/\r\n|\n|\r/)
   const matches: string[] = inputLines.filter(line => {
     return line.match(regex) === null ? false : true
   })

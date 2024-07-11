@@ -55,22 +55,12 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Set a variable
-        run: |
-          echo BODY='
-          <!--
-          author=my name
-          date=2021-10-01
-          -->
-          This is a test body
-          ' >> "$GITHUB_ENV"
-
       - name: Test Local Action
         id: test-action
         uses: ./
         with:
           issue_title: 'Test Issue'
-          issue_body: ${{ env.BODY }}
+          issue_body: '<!--\nauthor=My name\ndate=2021-10-01\n-->\nTest Body'
 
       - name: Print Output
         id: output
