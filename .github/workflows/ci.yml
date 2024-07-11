@@ -65,7 +65,7 @@ jobs:
             -->
             This is a test issue.
             echo EOF
-          } >> $GITHUB_ENV
+          } >> "$GITHUB_ENV"
 
       - name: Test Local Action
         id: test-action
