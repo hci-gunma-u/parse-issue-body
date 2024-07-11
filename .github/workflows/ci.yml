@@ -57,8 +57,8 @@ jobs:
 
       - name: Set a variable
         run: |
-          cat <<EOF >> $GITHUB_ENV
-          <!--
+          cat <<EOF >> "$GITHUB_ENV"
+          BODY=<!--
           author=my name
           date=2021-10-01
           -->
