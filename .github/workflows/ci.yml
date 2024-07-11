@@ -64,6 +64,7 @@ jobs:
             echo 'date=2021-10-01'
             echo '-->'
             echo 'Test Body'
+            echo 'EOF'
           } >> "$GITHUB_ENV"
 
       - name: Test Local Action
