@@ -57,7 +57,13 @@ jobs:
 
       - name: Set a variable
         run: |
-          echo BODY=`cat .github/workflows/data_for_ci.txt` >> "$GITHUB_ENV"
+          echo BODY='
+          <!--
+          author=my name
+          date=2021-10-01
+          -->
+          This is a test body
+          ' >> "$GITHUB_ENV"
 
       - name: Test Local Action
         id: test-action
