@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import replaceSpecialCharacters from './replace'
+import grep from './grep'
 
 /**
  * The main function for the action.
@@ -7,20 +8,31 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    const title: string = core.getInput('issue_title')
+    const body: string = core.getInput('issue_body')
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const author: string[] | null = grep(body, '^author=.+$')
+    const date: string[] | null = grep(
+      body,
+      '^date=[0-9]{4}[-/.][0-9]{2}[-/.][0-9]{2}$'
+    )
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const authorString: string = author ? author[0] : ''
+    const dateString: string = date ? date[0] : ''
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    core.debug(`Author: ${authorString}`)
+    core.debug(`Date: ${dateString}`)
+
+    const authorName: string = authorString.split('=')[1]
+    const dateValue: string = dateString.split('=')[1].replaceAll('/[/.]/', '-')
+
+    const bodyWithoutComments: string = body.replace(/<!--.*-->/gs, '').trim()
+
+    core.setOutput('title', replaceSpecialCharacters(title))
+    core.setOutput('date', dateValue)
+    core.setOutput('author', replaceSpecialCharacters(authorName))
+    core.setOutput('body', replaceSpecialCharacters(bodyWithoutComments))
   } catch (error) {
-    // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
 }

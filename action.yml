@@ -1,23 +1,24 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Parse issue'
+description: 'Parse issue title and body and get the metadata of new article.'
+author: 'Sho Kitamura'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
-branding:
-  icon: 'heart'
-  color: 'red'
-
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  issue_title:
+    description: 'Issue title'
     required: true
-    default: '1000'
+  issue_body:
+    description: 'Issue body'
+    required: true
 
-# Define your outputs here.
 outputs:
-  time:
-    description: 'Your output description here'
+  title:
+    description: 'Title of the article'
+  date:
+    description: 'Date of the article'
+  author:
+    description: 'Author of the article'
+  body:
+    description: 'Body of the article'
 
 runs:
   using: node20
