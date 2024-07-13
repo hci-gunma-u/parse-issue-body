@@ -3,7 +3,7 @@ type SpecialCharacters = {
 }
 
 /**
- * Replaces special characters(double and single quote, doller) in a string with their HTML entity equivalents.
+ * Replaces special characters(double and single quote, dollar) in a string with their HTML entity equivalents.
  * @param {string} str The string to replace special characters in.
  * @returns {string} The string with special characters replaced.
  */
