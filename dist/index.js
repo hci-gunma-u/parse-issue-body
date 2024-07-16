@@ -24999,10 +24999,11 @@ async function run() {
             dateFormatted = `${dateParts[0]}-${dateParts[1].padStart(2, '0')}-${dateParts[2].padStart(2, '0')}`;
         }
         const bodyWithoutComments = body.replace(/<!--.*-->/gs, '').trim();
+        const bodyWithHalfWidthExclamationMarks = bodyWithoutComments.replace(/！/g, '!'); // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
         core.setOutput('title', (0, replace_1.default)(title));
         core.setOutput('date', dateFormatted);
         core.setOutput('author', (0, replace_1.default)(authorName));
-        core.setOutput('body', (0, replace_1.default)(bodyWithoutComments));
+        core.setOutput('body', (0, replace_1.default)(bodyWithHalfWidthExclamationMarks));
     }
     catch (error) {
         if (error instanceof Error)
@@ -25021,7 +25022,7 @@ async function run() {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports["default"] = replaceSpecialCharacters;
 /**
- * Replaces special characters(double and single quote, doller) in a string with their HTML entity equivalents.
+ * Replaces special characters(double and single quote, dollar) in a string with their HTML entity equivalents.
  * @param {string} str The string to replace special characters in.
  * @returns {string} The string with special characters replaced.
  */
