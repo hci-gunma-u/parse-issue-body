@@ -27,12 +27,16 @@ export async function run(): Promise<void> {
     }
 
     const bodyWithoutComments: string = body.replace(/<!--.*-->/gs, '').trim()
-    const bodyWithHalfWidthExclamationMarks: string = bodyWithoutComments.replace(/！/g, '!') // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
+    const bodyWithHalfWidthExclamationMarks: string =
+      bodyWithoutComments.replace(/！/g, '!') // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
 
     core.setOutput('title', replaceSpecialCharacters(title))
     core.setOutput('date', dateFormatted)
     core.setOutput('author', replaceSpecialCharacters(authorName))
-    core.setOutput('body', replaceSpecialCharacters(bodyWithHalfWidthExclamationMarks))
+    core.setOutput(
+      'body',
+      replaceSpecialCharacters(bodyWithHalfWidthExclamationMarks)
+    )
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
