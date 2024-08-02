@@ -1,6 +1,6 @@
 type SpecialCharacters = {
-  [key: string]: string
-}
+  [key: string]: string;
+};
 
 /**
  * Replaces special characters(double and single quote, dollar) in a string with their HTML entity equivalents.
@@ -13,8 +13,8 @@ export default function replaceSpecialCharacters(str: string): string {
     '"': '&quot;',
     "'": '&#39;',
     $: '&#36;'
-  }
+  };
 
   // Replace the special characters in the string
-  return str.replace(/["'$]/g, match => specialCharacters[match])
+  return str.replace(/["'$]/g, match => specialCharacters[match]);
 }
