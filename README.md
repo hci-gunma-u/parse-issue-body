@@ -9,4 +9,4 @@ data.
 >
 > Non admin user cannot push to this repository.
 
-[![Super-Linter](https://github.com/hci-gunma-u/parse-issue-body/actions/workflows/linter.yaml/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Super-Linter](https://github.com/hci-gunma-u/parse-issue-body/actions/workflows/linter.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
