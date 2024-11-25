@@ -1,6 +1,4 @@
-type SpecialCharacters = {
-  [key: string]: string;
-};
+type SpecialCharacters = Record<string, string>;
 
 /**
  * Replaces special characters(double and single quote, dollar) in a string with their HTML entity equivalents.
