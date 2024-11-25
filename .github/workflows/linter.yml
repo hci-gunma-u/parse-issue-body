@@ -46,3 +46,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_JSCPD: false
           VALIDATE_TYPESCRIPT_STANDARD: false
+          TYPESCRIPT_STANDARD_TSCONFIG_FILE: /github/workspace/tsconfig.json
