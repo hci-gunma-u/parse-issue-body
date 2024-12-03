@@ -25665,45 +25665,12 @@ function grep(input, pattern) {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = run;
-const core = __importStar(__nccwpck_require__(7484));
+const core_1 = __nccwpck_require__(7484);
 const replace_1 = __importDefault(__nccwpck_require__(4183));
 const grep_1 = __importDefault(__nccwpck_require__(9867));
 /**
@@ -25712,8 +25679,8 @@ const grep_1 = __importDefault(__nccwpck_require__(9867));
  */
 function run() {
     try {
-        const title = core.getInput('issue_title');
-        const body = core.getInput('issue_body');
+        const title = (0, core_1.getInput)('issue_title');
+        const body = (0, core_1.getInput)('issue_body');
         const author = (0, grep_1.default)(body, '^author=.+$');
         const date = (0, grep_1.default)(body, '^date=[0-9]{4}[-/.][0-9]{1,2}[-/.][0-9]{1,2}$');
         const authorName = author ? author[0].split('=')[1] : '';
@@ -25725,14 +25692,14 @@ function run() {
         }
         const bodyWithoutComments = body.replace(/<!--.*-->/gs, '').trim();
         const bodyWithHalfWidthExclamationMarks = bodyWithoutComments.replace(/！/g, '!'); // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
-        core.setOutput('title', (0, replace_1.default)(title));
-        core.setOutput('date', dateFormatted);
-        core.setOutput('author', (0, replace_1.default)(authorName));
-        core.setOutput('body', (0, replace_1.default)(bodyWithHalfWidthExclamationMarks));
+        (0, core_1.setOutput)('title', (0, replace_1.default)(title));
+        (0, core_1.setOutput)('date', dateFormatted);
+        (0, core_1.setOutput)('author', (0, replace_1.default)(authorName));
+        (0, core_1.setOutput)('body', (0, replace_1.default)(bodyWithHalfWidthExclamationMarks));
     }
     catch (error) {
         if (error instanceof Error)
-            core.setFailed(error.message);
+            (0, core_1.setFailed)(error.message);
     }
 }
 
