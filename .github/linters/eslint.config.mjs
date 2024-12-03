@@ -8,6 +8,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-plugin-prettier';
 import stylistic from '@stylistic/eslint-plugin';
+import github from 'eslint-plugin-github';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,6 +26,18 @@ export default tseslint.config(
       '**/coverage/**/*',
       '**/__tests__/**/*'
     ]
+  },
+  github.getFlatConfigs().internal,
+  ...github.getFlatConfigs().typescript,
+  {
+    files: ['**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
+    ignores: ['eslint.config.mjs'],
+    rules: {
+      'github/array-foreach': 'error',
+      'github/no-then': 'error',
+      'github/no-blur': 'error',
+      'github/async-preventdefault': 'error'
+    }
   },
   js.configs.recommended,
   tseslint.configs.strictTypeChecked,
