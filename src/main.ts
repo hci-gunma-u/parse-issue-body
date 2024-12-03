@@ -1,4 +1,4 @@
-import * as core from '@actions/core';
+import { getInput, setOutput, setFailed } from '@actions/core';
 import replaceSpecialCharacters from './replace';
 import grep from './grep';
 
@@ -8,8 +8,8 @@ import grep from './grep';
  */
 export function run(): void {
   try {
-    const title: string = core.getInput('issue_title');
-    const body: string = core.getInput('issue_body');
+    const title: string = getInput('issue_title');
+    const body: string = getInput('issue_body');
 
     const author: string[] | null = grep(body, '^author=.+$');
     const date: string[] | null = grep(
@@ -30,14 +30,14 @@ export function run(): void {
     const bodyWithHalfWidthExclamationMarks: string =
       bodyWithoutComments.replace(/！/g, '!'); // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
 
-    core.setOutput('title', replaceSpecialCharacters(title));
-    core.setOutput('date', dateFormatted);
-    core.setOutput('author', replaceSpecialCharacters(authorName));
-    core.setOutput(
+    setOutput('title', replaceSpecialCharacters(title));
+    setOutput('date', dateFormatted);
+    setOutput('author', replaceSpecialCharacters(authorName));
+    setOutput(
       'body',
       replaceSpecialCharacters(bodyWithHalfWidthExclamationMarks)
     );
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+    if (error instanceof Error) setFailed(error.message);
   }
 }
