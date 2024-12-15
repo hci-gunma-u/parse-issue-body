@@ -26,7 +26,12 @@ export function run(): void {
       dateFormatted = `${dateParts[0]}-${dateParts[1].padStart(2, '0')}-${dateParts[2].padStart(2, '0')}`;
     }
 
-    const bodyWithoutComments: string = body.replace(/<!--.*-->/gs, '').trim();
+    let bodyWithoutComments: string = body;
+    let previousBody: string;
+    do {
+      previousBody = bodyWithoutComments;
+      bodyWithoutComments = bodyWithoutComments.replace(/<!--.*?-->/gs, '').trim();
+    } while (bodyWithoutComments !== previousBody);
     const bodyWithHalfWidthExclamationMarks: string =
       bodyWithoutComments.replace(/！/g, '!'); // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
 
