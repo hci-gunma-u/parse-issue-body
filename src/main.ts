@@ -30,7 +30,9 @@ export function run(): void {
     let previousBody: string;
     do {
       previousBody = bodyWithoutComments;
-      bodyWithoutComments = bodyWithoutComments.replace(/<!--.*?-->/gs, '').trim();
+      bodyWithoutComments = bodyWithoutComments
+        .replace(/<!--.*?-->/gs, '')
+        .trim();
     } while (bodyWithoutComments !== previousBody);
     const bodyWithHalfWidthExclamationMarks: string =
       bodyWithoutComments.replace(/！/g, '!'); // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
