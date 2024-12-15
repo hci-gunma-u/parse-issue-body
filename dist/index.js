@@ -25690,7 +25690,14 @@ function run() {
             const dateParts = dateValue.split(/[-/.]/);
             dateFormatted = `${dateParts[0]}-${dateParts[1].padStart(2, '0')}-${dateParts[2].padStart(2, '0')}`;
         }
-        const bodyWithoutComments = body.replace(/<!--.*-->/gs, '').trim();
+        let bodyWithoutComments = body;
+        let previousBody;
+        do {
+            previousBody = bodyWithoutComments;
+            bodyWithoutComments = bodyWithoutComments
+                .replace(/<!--.*?-->/gs, '')
+                .trim();
+        } while (bodyWithoutComments !== previousBody);
         const bodyWithHalfWidthExclamationMarks = bodyWithoutComments.replace(/！/g, '!'); // Replace full-width exclamation marks with half-width exclamation marks to avoid font related issues
         (0, core_1.setOutput)('title', (0, replace_1.default)(title));
         (0, core_1.setOutput)('date', dateFormatted);
