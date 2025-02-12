@@ -1,5 +1,4 @@
 import jest from 'eslint-plugin-jest';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -47,7 +46,6 @@ export default tseslint.config(
     plugins: {
       jest,
       prettier,
-      '@typescript-eslint': typescriptEslint,
       '@stylistic': stylistic
     },
 
